@@ -1,61 +1,123 @@
 <template>
-  <div style="width: 200px; height: 100%">
-    <!-- <el-radio-group v-model="isCollapse">
-      <el-radio-button :label="false">expand</el-radio-button>
-      <el-radio-button :label="true">collapse</el-radio-button>
-    </el-radio-group> -->
+  <div style="height: 100%">
     <el-menu
-      default-active="2"
+      :default-active="activeMenu"
       class="el-menu-vertical-demo"
       :collapse="isCollapse"
-      background-color="#79bbff"
+      background-color="#545c64"
       text-color="#fff"
-      active-text-color="#0ff"
+      active-text-color="#ffd04b"
+      unique-opened
     >
-      <el-sub-menu index="1">
+      <el-menu-item
+        v-for="(route, index) in asideNoChildMenu"
+        :key="index"
+        :index="route.path"
+        @click="changeMenu(route)"
+      >
+        <el-icon>
+          <component :is="route.meta.icon" />
+        </el-icon>
+        <span>{{ route.meta.title }}</span>
+      </el-menu-item>
+      <el-sub-menu
+        v-for="(route, index) in asideHasChildMenu"
+        :key="index"
+        :index="route.path"
+      >
         <template #title>
-          <el-icon><location /></el-icon>
-          <span>导航一</span>
+          <el-icon><component :is="route.meta.icon" /></el-icon>
+          <span>{{ route.meta.title }}</span>
         </template>
-        <el-menu-item-group>
-          <el-menu-item index="1-1">选项一</el-menu-item>
+        <el-menu-item-group
+          v-for="(subRoute, subIndex) in route.children"
+          :key="subIndex"
+        >
+          <el-menu-item :index="subRoute.path" @click="changeMenu(subRoute)">
+            <el-icon><component :is="subRoute.meta.icon" /></el-icon>
+            <span>{{ subRoute.meta.title }}</span>
+          </el-menu-item>
         </el-menu-item-group>
       </el-sub-menu>
-      <el-menu-item index="2">
-        <el-icon><icon-menu /></el-icon>
-        <span>导航二</span>
-      </el-menu-item>
-      <el-menu-item index="3">
-        <el-icon><document /></el-icon>
-        <span>导航三</span>
-      </el-menu-item>
-      <el-menu-item index="4">
-        <el-icon><setting /></el-icon>
-        <span>导航四</span>
-      </el-menu-item>
     </el-menu>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
-import {
-  Document,
-  Menu as IconMenu,
-  Location,
-  Setting,
-} from '@element-plus/icons-vue'
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 export default {
-  components: {
-    Document,
-    IconMenu,
-    Location,
-    Setting,
-  },
+  components: {},
   setup() {
-    let isCollapse = ref(false)
+    let store = useStore()
+    let isCollapse = computed(() => store.state.tabMenu.isCollapse)
+    let asideMenu = [
+      {
+        path: '/',
+        name: 'home',
+        meta: {
+          title: '首页',
+          icon: 'House',
+        },
+      },
+      {
+        path: '/User',
+        meta: {
+          title: '用户管理',
+          icon: 'User',
+        },
+        children: [
+          {
+            path: '/User',
+            name: 'user',
+            meta: {
+              title: '用户列表',
+              icon: 'List',
+            },
+          },
+        ],
+      },
+      {
+        path: '/Blog',
+        meta: {
+          title: '博客列表管理',
+          icon: 'Notebook',
+        },
+        children: [
+          {
+            path: '/Blog',
+            name: 'blog',
+            meta: {
+              title: '博客列表',
+              icon: 'List',
+            },
+          },
+        ],
+      },
+    ]
+    let asideNoChildMenu = asideMenu.filter((item) => !item.children)
+    let asideHasChildMenu = asideMenu.filter((item) => item.children)
+    let route = useRoute()
+    let activeMenu = computed(() => {
+      let { meta, path } = route
+      if (meta.activeMenu) {
+        return meta.activeMenu
+      }
+      return path
+    })
+    let router = useRouter()
+    function changeMenu(item) {
+      router.push({ name: item.name })
+      store.commit('tabMenu/selectMenu', item)
+      store.commit('tabMenu/changeTag', item)
+    }
     return {
       isCollapse,
+      activeMenu,
+      changeMenu,
+      asideNoChildMenu,
+      asideHasChildMenu,
     }
   },
 }
@@ -64,5 +126,23 @@ export default {
 <style lang="scss" scoped>
 .el-menu {
   height: 100%;
+  border: none;
+}
+</style>
+<style lang="scss">
+// .el-menu--collapse .el-menu-item span,
+// .el-menu--collapse .el-sub-menu__title span {
+//   height: 0;
+//   width: 0;
+//   overflow: hidden;
+//   visibility: hidden;
+//   display: inline-block;
+// }
+// .el-menu--collapse .el-sub-menu__icon-arrow {
+//   display: none;
+// }
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
 }
 </style>

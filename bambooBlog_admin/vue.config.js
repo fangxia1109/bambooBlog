@@ -4,7 +4,7 @@ module.exports = defineConfig({
   devServer: {
     host: 'localhost',
     port: 1109,
-    open: true, //设置窗口自动打开
+    open: false, //设置窗口自动打开
   },
   css: {
     loaderOptions: {

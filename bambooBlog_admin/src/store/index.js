@@ -1,9 +1,8 @@
 import { createStore } from 'vuex'
+import tabMenu from './modules/tabMenu'
 
 export default createStore({
-  state: {},
-  getters: {},
-  mutations: {},
-  actions: {},
-  modules: {},
+  modules: {
+    tabMenu,
+  },
 })

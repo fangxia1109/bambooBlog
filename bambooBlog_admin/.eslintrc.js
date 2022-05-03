@@ -9,7 +9,8 @@ module.exports = {
     'plugin:prettier/recommended',
   ],
   parserOptions: {
-    parser: '@babel/eslint-parser',
+    parser: 'babel-eslint',
+    requireConfigFile: false,
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
