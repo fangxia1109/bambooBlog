@@ -83,5 +83,4 @@ const router = new Router({
   // mode: 'history', // require service support
   routes: constantRoutes
 })
-console.log(router, 'router')
 export default router

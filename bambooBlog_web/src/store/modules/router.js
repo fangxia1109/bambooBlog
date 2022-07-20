@@ -1,4 +1,4 @@
-import { router } from '@/router'
+import { constantRoutes } from '@/router'
 
 const state = {
   routerList: []
@@ -15,8 +15,7 @@ const actions = {
   getRouterList ({ commit }, data) {
     const path = data
     return new Promise(resolve => {
-      console.log(router)
-      let list = router.filter(item => item.path === '/')[0].children // 一级路由
+      let list = constantRoutes.filter(item => item.path === '/')[0].children // 一级路由
       let currentRouterList = list.filter(item1 => item1.path === path)[0].children // 当前一级路由下的子路由
       commit('SET_ROUTERLIST', currentRouterList)
       resolve(list)
