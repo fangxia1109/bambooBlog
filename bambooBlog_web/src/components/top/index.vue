@@ -17,18 +17,13 @@
           mode="horizontal"
           @select="handleSelect"
         >
-          <template v-for="(route, index) in permissionRoutes">
+          <template v-for="(route, index) in routerList">
             <el-menu-item
               v-if="!route.hidden"
               :index="route.path"
               :key="index"
             >
-            {{generateTitle(route.meta.title)``}}
-              <item
-                v-if="route.meta"
-                :icon="route.meta && route.meta.icon"
-                :title="generateTitle(route.meta.title)"
-              />
+            {{generateTitle(route.meta.title)}}
             </el-menu-item>
           </template>
         </el-menu>
@@ -39,11 +34,13 @@
 
 <script>
 import { generateTitle } from "@/utils/i18n";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return{
       bgColor: '#5396ca',
-      textColor: '#ffffff'
+      textColor: '#ffffff',
+      activeTextColor: '#000000'
     }
   },
   computed: {
@@ -55,6 +52,11 @@ export default {
   },
   methods: {
     generateTitle,
+    // 导航菜单栏选择
+    handleSelect(key, keyPath) {
+      this.$store.dispatch("router/getRouterList", key);
+      this.$router.push(key);
+    },
   }
 }
 </script>

@@ -13,6 +13,7 @@ import i18n from './assets/lang'
 Vue.config.productionTip = false
 Vue.use(VueCookie)
 Vue.use(ElementUI)
+console.log(router)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import layout from '@/layout/layout.vue'
+import VueRouter from 'vue-router'
 
 Vue.use(Router)
 
@@ -9,7 +10,7 @@ Router.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
 
-export const router = [
+export const constantRoutes = [
   {
     path: '/',
     name: 'layout',
@@ -76,7 +77,11 @@ export const router = [
   { path: '/404', component: () => import('@/views/404'), hidden: true },
   { path: '/500', component: () => import('@/views/500'), hidden: true },
   { path: '/502', component: () => import('@/views/502'), hidden: true },
-  { path: '/*', component: () => import('@/views/404'), hidden: true }
+  { path: '/*', redirect: '/', hidden: true }
 ]
-
+const router = new Router({
+  // mode: 'history', // require service support
+  routes: constantRoutes
+})
+console.log(router, 'router')
 export default router
