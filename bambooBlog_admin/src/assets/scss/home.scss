@@ -1,0 +1,97 @@
+.home {
+  .left {
+    .left-top {
+      height: 290px;
+      .user {
+        display: flex;
+        align-items: center;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #cccccc;
+        .userImg {
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+          margin-right: 40px;
+        }
+        .user-info {
+          .name {
+            font-size: 32px;
+            margin-bottom: 10px;
+          }
+          .access {
+            color: #999999;
+          }
+        }
+      }
+      .login-info {
+        p {
+          line-height: 28px;
+          font-size: 14px;
+          color: #999999;
+          span {
+            color: #666666;
+            margin-left: 60px;
+          }
+        }
+      }
+    }
+    .left-bottom {
+      height: 522px;
+      margin-top: 20px;
+    }
+  }
+  .right {
+    .numTags {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      justify-content: space-around;
+      .el-card {
+        flex: 0 0 31%;
+        margin-bottom: 20px;
+        // margin-right: 20px;
+        .icon {
+          font-size: 30px;
+          width: 80px;
+          height: 80px;
+          text-align: center;
+          line-height: 80px;
+          color: #ffffff;
+        }
+        .detail {
+          margin-left: 15px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          .num {
+            font-size: 30px;
+            margin-bottom: 10px;
+          }
+          .txt {
+            font-size: 16px;
+            text-align: center;
+            color: #999999;
+          }
+        }
+      }
+      .el-card:last-child {
+        margin-right: 0;
+      }
+    }
+    .right-middle {
+      margin-bottom: 20px;
+    }
+    .right-bottom {
+      display: flex;
+      .el-card {
+        flex: 1;
+        margin-bottom: 20px;
+        margin-right: 20px;
+      }
+      .el-card:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
