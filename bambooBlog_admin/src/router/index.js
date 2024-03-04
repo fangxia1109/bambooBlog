@@ -3,7 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 const routes = [
   // 配置路由
   {
-    path: '/Login',
+    path: '/',
     name: 'login',
     component: () => import('@/views/Login/Login.vue'),
   },
@@ -13,7 +13,7 @@ const routes = [
     component: () => import('@/views/Layout/index.vue'),
     children: [
       {
-        path: '/',
+        path: '/home',
         name: 'home',
         component: () => import('@/views/Home/Home.vue'),
       },
